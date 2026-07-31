@@ -14,11 +14,11 @@ def update():
     """Read master-channel peak levels and drive the S/M button LEDs
     as a simple stereo VU meter."""
 
-    peak_r = mixer.getLastPeakVol(0)
-    peak_l = mixer.getLastPeakVol(1)
+    peak_l = mixer.getLastPeakVol(0)
+    peak_r = mixer.getLastPeakVol(1)
 
-    leds_r = min(8, int(peak_r * (8 * VU_Sensitivity)))
     leds_l = min(8, int(peak_l * (8 * VU_Sensitivity)))
+    leds_r = min(8, int(peak_r * (8 * VU_Sensitivity)))
 
     for i, cc in enumerate(VU_RIGHT_CCS):
         midiOutMsg(
