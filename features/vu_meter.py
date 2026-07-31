@@ -7,7 +7,7 @@ import midi
 import mixer
 from device import midiOutMsg
 
-from config import MIDI_CHANNEL, VU_RIGHT_CCS, VU_LEFT_CCS
+from config import MIDI_CHANNEL, VU_RIGHT_CCS, VU_LEFT_CCS, VU_SENSITIVITY
 
 
 def update():
@@ -17,8 +17,8 @@ def update():
     peak_l = mixer.getLastPeakVol(0)
     peak_r = mixer.getLastPeakVol(1)
 
-    leds_l = min(8, int(peak_l * (8 * VU_Sensitivity)))
-    leds_r = min(8, int(peak_r * (8 * VU_Sensitivity)))
+    leds_l = min(8, int(peak_l * (8 * VU_SENSITIVITY)))
+    leds_r = min(8, int(peak_r * (8 * VU_SENSITIVITY)))
 
     for i, cc in enumerate(VU_RIGHT_CCS):
         midiOutMsg(
