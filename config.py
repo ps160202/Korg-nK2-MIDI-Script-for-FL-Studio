@@ -18,3 +18,5 @@ RECORD_CC = 45
 VU_RIGHT_CCS = [39, 38, 37, 36, 35, 34, 33, 32]
 # Left channel  (mapped to M buttons, descending)
 VU_LEFT_CCS  = [55, 54, 53, 52, 51, 50, 49, 48]
+# Sensitivity of VU meter. Range from 0 to 2 (1 being default sensitivity)
+VU_Sensitivity = 1.2
