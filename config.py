@@ -12,6 +12,7 @@ STOP_CC   = 42
 REW_CC    = 43
 FF_CC     = 44
 RECORD_CC = 45
+CYCLE_CC  = 46
 
 # ── Solo / Mute / Record-arm LED CCs (VU meter) ─
 # Right channel (mapped to S buttons, descending)

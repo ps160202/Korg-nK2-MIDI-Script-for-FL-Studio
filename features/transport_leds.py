@@ -7,7 +7,7 @@ import transport
 import midi
 from device import midiOutMsg
 
-from config import MIDI_CHANNEL, PLAY_CC, RECORD_CC
+from config import MIDI_CHANNEL, PLAY_CC, RECORD_CC, CYCLE_CC
 
 
 def update():
@@ -21,3 +21,7 @@ def update():
     # Record LED
     rec_val = 127 if transport.isRecording() else 0
     midiOutMsg(midi.MIDI_CONTROLCHANGE, MIDI_CHANNEL, RECORD_CC, rec_val)
+
+    # Cycle LED (Song = ON, Pattern = OFF)
+    cycle_val = 127 if transport.getLoopMode() else 0
+    midiOutMsg(midi.MIDI_CONTROLCHANGE, MIDI_CHANNEL, CYCLE_CC, cycle_val)

@@ -14,6 +14,7 @@ from config import (
     REW_CC,
     FF_CC,
     RECORD_CC,
+    CYCLE_CC,
 )
 
 
@@ -61,6 +62,13 @@ def _handle_fast_forward(event):
     event.handled = True
 
 
+def _handle_cycle(event):
+    if event.data2 > 0:
+        transport.setLoopMode()
+        _echo_cc(CYCLE_CC, 127 if transport.getLoopMode() else 0)
+    event.handled = True
+
+
 # ── Dispatch table ────────────────────────────
 
 _DISPATCH = {
@@ -69,6 +77,7 @@ _DISPATCH = {
     STOP_CC:   _handle_stop,
     REW_CC:    _handle_rewind,
     FF_CC:     _handle_fast_forward,
+    CYCLE_CC:  _handle_cycle,
 }
 
 
