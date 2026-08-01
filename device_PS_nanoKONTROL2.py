@@ -15,6 +15,8 @@ from features import project_load
 from features import idle_animation
 from features import channel_SM_leds
 
+_was_idle_anim_active = False
+
 
 def OnInit():
     """Called once when FL Studio loads the script."""
@@ -23,12 +25,12 @@ def OnInit():
 
 def OnRefresh(flags):
     """Called when FL Studio's internal state changes."""
+
     if flags & midi.HW_Dirty_LEDs:
         idle_animation.notify_activity()
         transport_leds.update()
-    if flags & midi.HW_ChannelEvent:
-        idle_animation.notify_activity()
-        channel_SM_leds.set_SM_leds()
+    
+    channel_SM_leds.set_SM_leds()
 
 
 def OnProjectLoad(status):
@@ -40,10 +42,21 @@ def OnProjectLoad(status):
 
 def OnIdle():
     """Called continuously — drives animations and VU meters."""
+    global _was_idle_anim_active
+
     if project_load.tick():
         return
-    if idle_animation.tick():
+    
+    is_animating = idle_animation.tick()
+    if is_animating:
+        _was_idle_anim_active = True
         return
+
+    # If the animation just finished, force the cache to flush to the hardware
+    if _was_idle_anim_active:
+        channel_SM_leds.force_sync()
+        channel_SM_leds.set_SM_leds()
+        _was_idle_anim_active = False
 
     vu_meter.update()
 
