@@ -13,6 +13,7 @@ from config import (
     LOAD_TICKS_PER_RING,
     LOAD_HOLD_TICKS,
     LOAD_RIPPLES,
+    LOAD_TRAIL_LENGTH,
 )
 
 # ── Pre-compute rings (inside → out) ─────────
@@ -97,17 +98,16 @@ def tick():
         # a trailing edge turns off rings 2 behind.
         # We keep going past _NUM_RINGS so the trail
         # finishes sweeping off the outer rings.
-        _TRAIL = 2
         ring_index = _tick // LOAD_TICKS_PER_RING
 
-        if ring_index < _NUM_RINGS + _TRAIL:
+        if ring_index < _NUM_RINGS + LOAD_TRAIL_LENGTH:
             if _tick % LOAD_TICKS_PER_RING == 0:
                 # Light the next ring (if still in range)
                 if ring_index < _NUM_RINGS:
                     for r, c in _RINGS[ring_index]:
                         _set_led(r, c, True)
                 # Turn off the trailing ring
-                tail = ring_index - _TRAIL
+                tail = ring_index - LOAD_TRAIL_LENGTH
                 if tail >= 0:
                     for r, c in _RINGS[tail]:
                         _set_led(r, c, False)

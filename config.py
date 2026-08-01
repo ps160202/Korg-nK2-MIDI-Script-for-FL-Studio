@@ -40,4 +40,7 @@ LOAD_TICKS_PER_RING = 8
 LOAD_HOLD_TICKS = 100
 
 # Number of times the inside-out ripple effect should play
-LOAD_RIPPLES = 2
+LOAD_RIPPLES = 3
+
+# Number of rings before the trailing edge turns them off
+LOAD_TRAIL_LENGTH = 2
