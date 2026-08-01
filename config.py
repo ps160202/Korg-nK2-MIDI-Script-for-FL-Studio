@@ -2,6 +2,9 @@
 # config.py – Constants & CC mappings
 # ─────────────────────────────────────────────
 
+from enum import Enum
+from constants import IDLE_ANIMATION_TYPE
+
 # nanoKONTROL2 uses zero-based MIDI channels.
 # Channel 0 = MIDI Channel 1
 MIDI_CHANNEL = 0
@@ -50,9 +53,10 @@ LOAD_RIPPLES = 2
 LOAD_TRAIL_LENGTH = 2
 
 # ── Idle Animation ─────────────────────────────
+IDLE_ANIMATION_TYPE = IDLE_ANIMATION_TYPE.BARBER_POLE
 # Seconds of no MIDI messages before animation starts
 IDLE_TIMEOUT_SEC = 5.0
 # Animation speed (OnIdle ticks per step)
-IDLE_TICKS_PER_STEP = 12
+IDLE_TICKS_PER_STEP = 20
 # Number of LEDs in the trail
-IDLE_TRAIL_LENGTH = 3
+IDLE_TRAIL_LENGTH = 4
