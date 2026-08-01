@@ -17,8 +17,9 @@ def update():
     peak_l = mixer.getLastPeakVol(0)
     peak_r = mixer.getLastPeakVol(1)
 
-    leds_l = min(8, int(peak_l * (8 * VU_SENSITIVITY)))
-    leds_r = min(8, int(peak_r * (8 * VU_SENSITIVITY)))
+    num_leds = len(VU_RIGHT_CCS)
+    leds_l = min(num_leds, int(peak_l * (num_leds * VU_SENSITIVITY)))
+    leds_r = min(num_leds, int(peak_r * (num_leds * VU_SENSITIVITY)))
 
     for i, cc in enumerate(VU_RIGHT_CCS):
         midiOutMsg(

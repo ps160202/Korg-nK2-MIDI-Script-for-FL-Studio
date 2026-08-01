@@ -3,8 +3,11 @@
 #     message router
 # ─────────────────────────────────────────────
 
+from config import SOLO_CC
+from config import MUTE_CC
 import transport
 import midi
+import channels
 from device import midiOutMsg
 
 from config import (
@@ -68,6 +71,20 @@ def _handle_cycle(event):
         _echo_cc(CYCLE_CC, 127 if transport.getLoopMode() else 0)
     event.handled = True
 
+def _handle_solo(event):
+    if event.data2 > 0:
+        selectedChannel = channels.selectedChannel(0)
+        channels.soloChannel(selectedChannel)
+        _echo_cc(SOLO_CC, 127 if channels.isChannelSolo(selectedChannel) else 0)
+    event.handled = True
+
+def _handle_mute(event):
+    if event.data2 > 0:
+        selectedChannel = channels.selectedChannel(0)
+        channels.muteChannel(selectedChannel)
+        _echo_cc(MUTE_CC, 127 if channels.isChannelMuted(selectedChannel) else 0)
+    event.handled = True
+
 
 # ── Dispatch table ────────────────────────────
 
@@ -78,6 +95,8 @@ _DISPATCH = {
     REW_CC:    _handle_rewind,
     FF_CC:     _handle_fast_forward,
     CYCLE_CC:  _handle_cycle,
+    SOLO_CC:   _handle_solo,
+    MUTE_CC:   _handle_mute,
 }
 
 

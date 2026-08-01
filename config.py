@@ -21,11 +21,15 @@ SMR_GRID_CC = [
     [64, 65, 66, 67, 68, 69, 70, 71]
 ]
 
+# -- Solo / Mute Current Track ---
+SOLO_CC = SMR_GRID_CC[0][0]
+MUTE_CC = SMR_GRID_CC[1][0]
+
 # ── Solo / Mute / Record-arm LED CCs (VU meter) ─
-# Right channel (mapped to S buttons, descending)
-VU_RIGHT_CCS = SMR_GRID_CC[0][::-1]
-# Left channel  (mapped to M buttons, descending)
-VU_LEFT_CCS  = SMR_GRID_CC[1][::-1]
+# Right channel (mapped to S buttons, descending). Exclude column 0 used for Solo.
+VU_RIGHT_CCS = SMR_GRID_CC[0][1:][::-1]
+# Left channel  (mapped to M buttons, descending). Exclude column 0 used for Mute.
+VU_LEFT_CCS  = SMR_GRID_CC[1][1:][::-1]
 # Sensitivity of VU meter. Range from 0 to 2 (1 being default sensitivity)
 VU_SENSITIVITY = 1
 
