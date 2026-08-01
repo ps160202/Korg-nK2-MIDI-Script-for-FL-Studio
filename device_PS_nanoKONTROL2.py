@@ -10,6 +10,7 @@ import midi
 from features import transport_leds
 from features import vu_meter
 from features import midi_handler
+from features import project_load
 
 
 def OnInit():
@@ -23,9 +24,16 @@ def OnRefresh(flags):
         transport_leds.update()
 
 
+def OnProjectLoad(status):
+    """Called when a project starts or finishes loading."""
+    if status == 100:
+        project_load.start()
+
+
 def OnIdle():
     """Called continuously — drives the VU meter LEDs."""
-    vu_meter.update()
+    if not project_load.tick():
+        vu_meter.update()
 
 
 def OnMidiMsg(event):
