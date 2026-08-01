@@ -5,6 +5,7 @@
 # Entry point — FL Studio MIDI script callbacks
 # ─────────────────────────────────────────────
 
+import led_utils
 from features.channel_SM_leds import set_SM_leds
 import midi
 
@@ -12,7 +13,7 @@ from features import transport_leds
 from features import vu_meter
 from features import midi_handler
 from features import project_load
-from features import idle_animation
+from features import idleAnimation
 from features import channel_SM_leds
 
 _was_idle_anim_active = False
@@ -20,6 +21,8 @@ _was_idle_anim_active = False
 
 def OnInit():
     """Called once when FL Studio loads the script."""
+    led_utils.turnOffAllLEDs()
+
     transport_leds.update()
     channel_SM_leds.set_SM_leds()
 
@@ -27,7 +30,7 @@ def OnRefresh(flags):
     """Called when FL Studio's internal state changes."""
 
     if flags & midi.HW_Dirty_LEDs:
-        idle_animation.notify_activity()
+        idleAnimation.notify_activity()
         transport_leds.update()
     
     channel_SM_leds.set_SM_leds()
@@ -37,7 +40,7 @@ def OnProjectLoad(status):
     """Called when a project starts or finishes loading."""
     if status == 100:
         project_load.start()
-        idle_animation.notify_activity()
+        idleAnimation.notify_activity()
 
 
 def OnIdle():
@@ -47,7 +50,7 @@ def OnIdle():
     if project_load.tick():
         return
     
-    is_animating = idle_animation.tick()
+    is_animating = idleAnimation.tick()
     if is_animating:
         _was_idle_anim_active = True
         return
@@ -63,5 +66,5 @@ def OnIdle():
 
 def OnMidiMsg(event):
     """Called for every incoming MIDI message from the controller."""
-    idle_animation.notify_activity()
+    idleAnimation.notify_activity()
     midi_handler.dispatch(event)
