@@ -40,7 +40,15 @@ LOAD_TICKS_PER_RING = 8
 LOAD_HOLD_TICKS = 100
 
 # Number of times the inside-out ripple effect should play
-LOAD_RIPPLES = 3
+LOAD_RIPPLES = 2
 
 # Number of rings before the trailing edge turns them off
 LOAD_TRAIL_LENGTH = 2
+
+# ── Idle Animation ─────────────────────────────
+# Seconds of no MIDI messages before animation starts
+IDLE_TIMEOUT_SEC = 5.0
+# Animation speed (OnIdle ticks per step)
+IDLE_TICKS_PER_STEP = 12
+# Number of LEDs in the trail
+IDLE_TRAIL_LENGTH = 3

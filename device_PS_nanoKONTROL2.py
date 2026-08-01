@@ -11,6 +11,7 @@ from features import transport_leds
 from features import vu_meter
 from features import midi_handler
 from features import project_load
+from features import idle_animation
 
 
 def OnInit():
@@ -28,14 +29,20 @@ def OnProjectLoad(status):
     """Called when a project starts or finishes loading."""
     if status == 100:
         project_load.start()
+        idle_animation.notify_activity()
 
 
 def OnIdle():
-    """Called continuously — drives the VU meter LEDs."""
-    if not project_load.tick():
-        vu_meter.update()
+    """Called continuously — drives animations and VU meters."""
+    if project_load.tick():
+        return
+    if idle_animation.tick():
+        return
+
+    vu_meter.update()
 
 
 def OnMidiMsg(event):
     """Called for every incoming MIDI message from the controller."""
+    idle_animation.notify_activity()
     midi_handler.dispatch(event)
