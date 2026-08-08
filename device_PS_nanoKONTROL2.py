@@ -26,6 +26,9 @@ def OnInit():
     transport_leds.update()
     channel_SM_leds.set_SM_leds()
 
+def OnDeInit():
+    led_utils.turnOffAllLEDs()
+
 def OnRefresh(flags):
     """Called when FL Studio's internal state changes."""
 

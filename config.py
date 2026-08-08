@@ -17,6 +17,14 @@ FF_CC     = 44
 RECORD_CC = 45
 CYCLE_CC  = 46
 
+# ── Track/Marker Navigation CCs and Flags ─────
+TRACK_PREV_CC = 58
+TRACK_NEXT_CC = 59
+MARKER_PREV_CC = 61
+MARKER_NEXT_CC = 62
+
+FORCE_CLOSE_PLUGIN_ON_TRACK_CHANGE = True
+
 # ── SMR Grid CCs ─────────────────────────────
 SMR_GRID_CC = [
     [32, 33, 34, 35, 36, 37, 38, 39],
@@ -28,13 +36,16 @@ SMR_GRID_CC = [
 SOLO_CC = SMR_GRID_CC[0][0]
 MUTE_CC = SMR_GRID_CC[1][0]
 
+# Custom Open Plugin / PianoRoll CCs
+PLUGIN_PIANOROLL_TOGGLE = SMR_GRID_CC[2][0]
+
 # ── Solo / Mute / Record-arm LED CCs (VU meter) ─
 # Right channel (mapped to S buttons, descending). Exclude column 0 used for Solo.
 VU_RIGHT_CCS = SMR_GRID_CC[0][1:][::-1]
 # Left channel  (mapped to M buttons, descending). Exclude column 0 used for Mute.
 VU_LEFT_CCS  = SMR_GRID_CC[1][1:][::-1]
 # Sensitivity of VU meter. Range from 0 to 2 (1 being default sensitivity)
-VU_SENSITIVITY = 1
+VU_SENSITIVITY = 1.2
 
 # ── Project-load animation ───────────────────
 # Delay between each ring (in OnIdle ticks).
