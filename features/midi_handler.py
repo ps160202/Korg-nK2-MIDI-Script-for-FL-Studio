@@ -7,8 +7,11 @@ import transport
 import midi
 import channels
 from device import midiOutMsg
+from features import track_navigation
 
 from config import (
+    TRACK_PREV_CC,
+    TRACK_NEXT_CC,
     MIDI_CHANNEL,
     PLAY_CC,
     STOP_CC,
@@ -17,7 +20,8 @@ from config import (
     RECORD_CC,
     CYCLE_CC,
     SOLO_CC,
-    MUTE_CC
+    MUTE_CC,
+    PLUGIN_PIANOROLL_TOGGLE
 )
 
 
@@ -55,7 +59,6 @@ def _handle_fast_forward(event):
     else:
         transport.fastForward(0)
 
-
 def _handle_cycle(event):
     if event.data2 > 0:
         transport.setLoopMode()
@@ -73,7 +76,6 @@ def _handle_mute(event):
         channels.muteChannel(selectedChannel)
         _echo_cc(MUTE_CC, 127 if channels.isChannelMuted(selectedChannel) else 0)
 
-
 # ── Dispatch table ────────────────────────────
 
 _DISPATCH = {
@@ -85,6 +87,9 @@ _DISPATCH = {
     CYCLE_CC:  _handle_cycle,
     SOLO_CC:   _handle_solo,
     MUTE_CC:   _handle_mute,
+    PLUGIN_PIANOROLL_TOGGLE: track_navigation.handle_pianoroll_plugin_toggle,
+    TRACK_PREV_CC: track_navigation.handle_track_prev,
+    TRACK_NEXT_CC: track_navigation.handle_track_next,
 }
 
 
